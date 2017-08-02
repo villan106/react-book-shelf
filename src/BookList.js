@@ -16,13 +16,16 @@ class BookList extends React.Component {
     })
   }
 
+
+  // ERROR: cannot read property of 'id' undefined 
   changeShelf = (book) => {
     this.setState((state) => ({
-      shelf: state.books.filter((b) => b.shelf !== book.shelf)
+      books: state.books.filter((b) => b.shelf !== book.shelf)
     }))
 
     BooksAPI.update(book.id, book.shelf)
   }
+
 
 
 	render () {
@@ -49,7 +52,7 @@ class BookList extends React.Component {
 
                          <div className="book">
                             <div className="book-top">
-                              <img className="book-cover" key={book.imageLinks.thumbnail} src={book.imageLinks.thumbnail} style={{ width: 128, height: 193 }} alt="book cover"></img>
+                              <div className="book-cover" key={book.imageLinks.thumbnail} style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
                               <div className="book-shelf-changer">
                                 <select onChange={this.changeShelf}>
                                   <option value="none" disabled>Move to...</option>

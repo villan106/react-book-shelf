@@ -6,6 +6,8 @@ import BookSearch from './BookSearch'
 import BookList from './BookList'
 
 class BooksApp extends React.Component {
+  
+  // so search doesn't show up at BookList
   state = {
     showSearchPage: false
   }

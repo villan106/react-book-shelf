@@ -1,21 +1,11 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
+// import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Link } from 'react-router-dom'
 
 class BookSearch extends React.Component {
 
-	state = {
-		books: []
-	}
-
-	// is this the correct way to GET the data?
-	componentDidMount() {
-		BooksAPI.getAll().then((books) => {
-			this.setState({ books })
-		})
-	}
- 	// how can I see the APIs returns? only in the React inspector?
+ 	
 
 
 	render () {
@@ -42,27 +32,7 @@ class BookSearch extends React.Component {
 	                    <ol className="books-grid">
 	                      <li>
 
-	                  {/* is this the correct way to take API returns and input into rendered component? */}
-	                      {this.state.books.map((book) => (
-
-	                        <div className="book" key={book.id}>
-	                          <div className="book-top">
-	                            <img className="book-cover" key={book.imageLinks.thumbnail} src={book.imageLinks.thumbnail} style={{ width: 128, height: 193 }} alt="book cover"></img>
-	                            <div className="book-shelf-changer">
-	                              <select>
-	                                <option value="none" disabled>Move to...</option>
-	                                <option value="currentlyReading">Currently Reading</option>
-	                                <option value="wantToRead">Want to Read</option>
-	                                <option value="read">Read</option>
-	                                <option value="none">None</option>
-	                              </select>
-	                            </div>
-	                          </div>
-	                          <div className="book-title" key={book.title}>{book.title}</div>
-	                          <div className="book-authors" key={book.authors}>{book.authors}</div>
-	                        </div>
-
-	                        ))}
+	              
 
 	                      </li>
 	                    </ol>

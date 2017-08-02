@@ -16,6 +16,15 @@ class BookList extends React.Component {
     })
   }
 
+  changeShelf = (book) => {
+    this.setState((state) => ({
+      shelf: state.books.filter((b) => b.shelf !== book.shelf)
+    }))
+
+    BooksAPI.update(book.id, book.shelf)
+  }
+
+
 	render () {
 		return (
    	
@@ -32,15 +41,17 @@ class BookList extends React.Component {
                   <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                      <li>
+                      
+                      {this.state.books.map((book) => (
+                      <li key={book.id}>
 
-                        {this.state.books.map((book) => (
+                        
 
-                         <div className="book" key={book.id}>
+                         <div className="book">
                             <div className="book-top">
                               <img className="book-cover" key={book.imageLinks.thumbnail} src={book.imageLinks.thumbnail} style={{ width: 128, height: 193 }} alt="book cover"></img>
                               <div className="book-shelf-changer">
-                                <select>
+                                <select onChange={this.changeShelf}>
                                   <option value="none" disabled>Move to...</option>
                                   <option value="currentlyReading">Currently Reading</option>
                                   <option value="wantToRead">Want to Read</option>
@@ -53,9 +64,9 @@ class BookList extends React.Component {
                             <div className="book-authors" key={book.authors}>{book.authors}</div>
                           </div>
 
-                          ))}
+                          
                         </li>
-                      
+                      ))}
 
                       {/* hardcoded book
                       <li>

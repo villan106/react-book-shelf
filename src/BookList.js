@@ -30,26 +30,17 @@ constructor(props) {
     }
   }
 */
-  // ERROR: cannot read property of 'id' undefined - see note above state 
 
-  changeShelf = (book) => {
-    this.setState((state) => ({
-      books: state.books.filter((b) => b.shelf !== book.shelf)
-    }))
-    BooksAPI.update(book, book.shelf)
+  // BooksAPI needs book object and shelf string, so need to pass it to changeShelf
+
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(response => {
+      book.shelf = shelf
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([ book ])
+      }))      
+    })
   }
-
-/*
-  filterShelf = () => {
-    if(this.bookShelf === "Currently Reading"){
-      document.getElementById('book').style.display = 'none';
-    } else {
-      // do nothing
-    }
-  }
-*/
-
-
 
 	render () {
 		return (
@@ -75,7 +66,7 @@ constructor(props) {
                             <div className="book-top">
                               <div className="book-cover" key={book.imageLinks.thumbnail} style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
                               <div className="book-shelf-changer">
-                                <select onChange={this.changeShelf}>
+                                <select onChange={(event) => this.changeShelf(book, event.target.value)} defaultValue={book.shelf}>
                                   <option value="none" disabled>Move to...</option>
                                   <option value="currentlyReading">Currently Reading</option>
                                   <option value="wantToRead">Want to Read</option>
@@ -101,6 +92,7 @@ constructor(props) {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
+                      
                       
                     </ol>
                   </div>

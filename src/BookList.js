@@ -5,8 +5,15 @@ import { Link } from 'react-router-dom'
 
 class BookList extends React.Component {
 
+// need constructor and super to scope 'this' properly inside function
+constructor(props) {
+  super(props);
+  this.changeShelf = this.changeShelf.bind(this);
+}
+
+  // empty state to be filled with API data
 	state = {
-    books: []
+    books: [],
   }
 
   // represents books currently in the shelf
@@ -16,15 +23,31 @@ class BookList extends React.Component {
     })
   }
 
+/*
+  componentWillReceiveProps(nextProps) {
+    if(this.props.book.shelf !== nextProps.book.shelf) {
+      this.changeShelf(nextProps.book.shelf)
+    }
+  }
+*/
+  // ERROR: cannot read property of 'id' undefined - see note above state 
 
-  // ERROR: cannot read property of 'id' undefined 
   changeShelf = (book) => {
     this.setState((state) => ({
       books: state.books.filter((b) => b.shelf !== book.shelf)
     }))
-
-    BooksAPI.update(book.id, book.shelf)
+    BooksAPI.update(book, book.shelf)
   }
+
+/*
+  filterShelf = () => {
+    if(this.bookShelf === "Currently Reading"){
+      document.getElementById('book').style.display = 'none';
+    } else {
+      // do nothing
+    }
+  }
+*/
 
 
 
@@ -48,8 +71,6 @@ class BookList extends React.Component {
                       {this.state.books.map((book) => (
                       <li key={book.id}>
 
-                        
-
                          <div className="book">
                             <div className="book-top">
                               <div className="book-cover" key={book.imageLinks.thumbnail} style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
@@ -66,31 +87,10 @@ class BookList extends React.Component {
                             <div className="book-title" key={book.title}>{book.title}</div>
                             <div className="book-authors" key={book.authors}>{book.authors}</div>
                           </div>
-
-                          
+                        
                         </li>
                       ))}
 
-                      {/* hardcoded book
-                      <li>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 188, backgroundImage: 'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")' }}></div>
-                            <div className="book-shelf-changer">
-                              <select>
-                                <option value="none" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">Ender's Game</div>
-                          <div className="book-authors">Orson Scott Card</div>
-                        </div>
-                      </li>
-                      */}
 
                     </ol>
                   </div>

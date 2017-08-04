@@ -8,7 +8,8 @@ class BooksApp extends React.Component {
   
   // so search doesn't show up at BookList
   state = {
-    showSearchPage: false
+    showSearchPage: false,
+    books: []
   }
 
   render() {
@@ -17,9 +18,11 @@ class BooksApp extends React.Component {
 
       <div className="app">
 
-          <Route exact path="/" component={BookList} />
+          <Route exact path="/" render={() => (
+            <BookList books={this.state.books} /> )} />
+
           <Route exact path="/search" render={() => (
-            <BookSearch books={this.state.books} /> )} />
+            <BookSearch books={this.state.books} query={this.state.query} /> )} />
           
       </div>
     )

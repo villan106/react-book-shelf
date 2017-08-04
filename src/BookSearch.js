@@ -19,17 +19,21 @@ constructor(props) {
 
   state = {
     query: '',
-    books: []
+    books: [],
   }
 
   // updates state with user inputted query
-  updateQuery = ( query, book ) => {
+  updateQuery = ( query, books ) => {
     BooksAPI.search(query, 100).then(response => {
-    	this.setState({ query: query.trim() })  	
+    	this.setState({ query: query.trim() }) 	
     })
   } 
 
-
+  getSearchResults = ( query, books ) => {
+  	BooksAPI.search(query, 100).then(response => {
+  		this.setState({ books })
+  	})
+  }
 
 
 	render () {
@@ -45,7 +49,7 @@ constructor(props) {
 		                		type="text" 
 		                		placeholder="Search by title or author"
 		                		value={this.state.query}
-		                		onChange={(event) => this.updateQuery(event.target.value)}
+		                		onChange={(event) => this.updateQuery(event.target.value) && this.getSearchResults(event.target.value)}
 		                	/>
 		              	</div>
 		            </div>
@@ -60,7 +64,7 @@ constructor(props) {
 	                  <div className="bookshelf-books">
 	                    <ol className="books-grid">
 	                    
-	                	{this.state.books.map((book) => <Book key={book.id} book={book} /> )}
+	                	{this.props.books.map((book) => <Book key={book.id} book={book} /> )}
 	                    
 	                    </ol>
 	                  </div>

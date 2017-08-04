@@ -7,10 +7,10 @@ import Book from './Book'
 class BookList extends React.Component {
 
 // need constructor and super to scope 'this' properly inside function
-constructor(props) {
-  super(props);
-  this.changeShelf = this.changeShelf.bind(this);
-}
+  constructor(props) {
+    super(props);
+    this.changeShelf = this.changeShelf.bind(this);
+  }
 
   state = {
     books: []

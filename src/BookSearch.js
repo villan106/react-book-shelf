@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
-// import Book from './Book'
+import Book from './Book'
 // import escapeRegExp from 'escape-string-regexp'
 // import sortBy from 'sort-by'
 
@@ -10,17 +10,27 @@ import * as BooksAPI from './BooksAPI'
 
 class BookSearch extends React.Component {
 
+
+// need constructor and super to scope 'this' properly inside function
+constructor(props) {
+  super(props);
+  this.updateQuery = this.updateQuery.bind(this);
+}
+
   state = {
-    query: ''
+    query: '',
+    books: []
   }
 
   // updates state with user inputted query
-  updateQuery = (query, maxResults) => {
-    BooksAPI.search(query, maxResults).then(response => {
-      this.setState({ query: query.trim() })      
+  updateQuery = ( query, book ) => {
+    BooksAPI.search(query, 100).then(response => {
+    	this.setState({ query: query.trim() })  	
     })
-  }
- 
+  } 
+
+
+
 
 	render () {
 		return (
@@ -50,10 +60,7 @@ class BookSearch extends React.Component {
 	                  <div className="bookshelf-books">
 	                    <ol className="books-grid">
 	                    
-	                	{/* display books here */}
-	                	
-	                	{/* testing that state changes */}
-	                	{JSON.stringify(this.state.query)}
+	                	{this.state.books.map((book) => <Book key={book.id} book={book} /> )}
 	                    
 	                    </ol>
 	                  </div>

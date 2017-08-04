@@ -12,6 +12,10 @@ constructor(props) {
   this.changeShelf = this.changeShelf.bind(this);
 }
 
+  state = {
+    books: []
+  }
+
   // represents books currently in the shelf
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
@@ -47,7 +51,8 @@ constructor(props) {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
 
-                    {this.state.books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} />)}
+                    {/* must bind changeShelf func for it to be passed as a prop to Book.js */}
+                    {this.state.books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
 
                     </ol>
                   </div>
@@ -59,7 +64,8 @@ constructor(props) {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       
-                      
+                    {this.state.books.filter(book => book.shelf === 'wantToRead').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
+
                     </ol>
                   </div>
                 </div>
@@ -70,6 +76,8 @@ constructor(props) {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       
+                    {this.state.books.filter(book => book.shelf === 'read').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
+
                     </ol>
                   </div>
                 </div>

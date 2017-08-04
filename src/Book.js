@@ -1,5 +1,4 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class Book extends React.Component {
@@ -9,7 +8,7 @@ class Book extends React.Component {
 	render(){
 		return(
 
-		  {/* use this.props when receiving props from parent component */}
+		  /* use this.props when receiving props from parent component */
 	      <li key={this.props.book.id}>
 	         <div className="book">
 	            <div className="book-top">

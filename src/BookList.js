@@ -6,7 +6,6 @@ import Book from './Book'
 class BookList extends React.Component {
 
 
-
 	render () {
 
     // destructuring props so can be called without 'this.props'

@@ -14,29 +14,18 @@ class BookSearch extends React.Component {
 // need constructor and super to scope 'this' properly inside function
 constructor(props) {
   super(props);
-  this.updateQuery = this.updateQuery.bind(this);
 }
 
   state = {
     query: '',
-    books: [],
-  }
-
-  // updates state with user inputted query
-  updateQuery = ( query, books ) => {
-    BooksAPI.search(query, 100).then(response => {
-    	this.setState({ query: query.trim() }) 	
-    })
-  } 
-
-  getSearchResults = ( query, books ) => {
-  	BooksAPI.search(query, 100).then(response => {
-  		this.setState({ books })
-  	})
   }
 
 
 	render () {
+
+		// destructuring props so can be called without 'this.props'
+	    const { books, changeShelf } = this.props
+
 		return (
 
 			/* search bar */
@@ -49,7 +38,7 @@ constructor(props) {
 		                		type="text" 
 		                		placeholder="Search by title or author"
 		                		value={this.state.query}
-		                		onChange={(event) => this.updateQuery(event.target.value) && this.getSearchResults(event.target.value)}
+		                		onChange={(event) => this.updateQuery(event.target.value)}
 		                	/>
 		              	</div>
 		            </div>
@@ -64,7 +53,7 @@ constructor(props) {
 	                  <div className="bookshelf-books">
 	                    <ol className="books-grid">
 	                    
-	                	{this.props.books.map((book) => <Book key={book.id} book={book} /> )}
+	                	{books.map((book) => <Book key={book.id} book={book} /> )}
 	                    
 	                    </ol>
 	                  </div>

@@ -3,14 +3,53 @@ import './App.css'
 import { Route } from 'react-router-dom'
 import BookSearch from './BookSearch'
 import BookList from './BookList'
+import * as BooksAPI from './BooksAPI'
 
 class BooksApp extends React.Component {
-  
+    // need constructor and super to scope 'this' properly inside function
+  constructor(props) {
+    super(props);
+  }
+
   // so search doesn't show up at BookList
   state = {
     showSearchPage: false,
-    books: []
+    books: [],
   }
+
+
+    // represents books currently in the shelf
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
+    })
+  }
+
+  // BooksAPI needs book object and shelf string, so need to pass it to changeShelf
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(response => {
+      book.shelf = shelf
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([ book ])
+      }))      
+    })
+  }
+
+
+    // updates state with user inputted query
+  updateQuery = ( query, books ) => {
+    BooksAPI.search(query, 100).then(response => {
+      this.setState({ query: query.trim() })  
+    })
+  } 
+/* // other guy's func
+   updateQuery = query => {
+   this.setState({ query: query.trim() });
+   BooksAPI.search(query, 100).then(books => {
+     this.setState({ books });
+   });
+ };
+*/
 
   render() {
     
@@ -18,11 +57,17 @@ class BooksApp extends React.Component {
 
       <div className="app">
 
-          <Route exact path="/" render={() => (
-            <BookList books={this.state.books} /> )} />
+          <Route exact path="/" render={({ history }) => (
+            <BookList books={this.state.books} 
+                      changeShelf={this.changeShelf}
+                      /> )} />
+                      
 
-          <Route exact path="/search" render={() => (
-            <BookSearch books={this.state.books} query={this.state.query} /> )} />
+          <Route exact path="/search" render={({ history }) => (
+            <BookSearch books={this.state.books} 
+                        changeShelf={this.changeShelf}
+                        updateQuery={this.updateQuery}
+                        /> )} />
           
       </div>
     )

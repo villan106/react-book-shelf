@@ -1,40 +1,17 @@
 import React from 'react'
-import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Link } from 'react-router-dom'
 import Book from './Book'
 
 class BookList extends React.Component {
 
-// need constructor and super to scope 'this' properly inside function
-  constructor(props) {
-    super(props);
-    this.changeShelf = this.changeShelf.bind(this);
-  }
-
-  state = {
-    books: []
-  }
-
-  // represents books currently in the shelf
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-    })
-  }
-
-  // BooksAPI needs book object and shelf string, so need to pass it to changeShelf
-  changeShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(response => {
-      book.shelf = shelf
-      this.setState((state) => ({
-        books: state.books.filter((b) => b.id !== book.id).concat([ book ])
-      }))      
-    })
-  }
 
 
 	render () {
+
+    // destructuring props so can be called without 'this.props'
+    const { books, changeShelf } = this.props
+
 		return (
    	
 
@@ -52,8 +29,7 @@ class BookList extends React.Component {
                     <ol className="books-grid">
 
                     {/* must bind changeShelf func for it to be passed as a prop to Book.js */}
-                    {this.state.books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
-
+                    {books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
                     </ol>
                   </div>
                 </div>
@@ -64,8 +40,8 @@ class BookList extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       
-                    {this.state.books.filter(book => book.shelf === 'wantToRead').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
-
+                    {books.filter(book => book.shelf === 'wantToRead').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
+                  
                     </ol>
                   </div>
                 </div>
@@ -76,8 +52,8 @@ class BookList extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                       
-                    {this.state.books.filter(book => book.shelf === 'read').map((book) => <Book key={book.id} book={book} changeShelf={this.changeShelf.bind(this)} />)}
-
+                    {books.filter(book => book.shelf === 'read').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
+     
                     </ol>
                   </div>
                 </div>

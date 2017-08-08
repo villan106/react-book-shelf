@@ -1,47 +1,26 @@
 # A React Bookshelf
 
-This is a simple bookshelf project built in React.
+This is a bookshelf project built in React for the [Udacity React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019).
 
-## Tree Structure
-```
-+--public/    
- |-- index.html 
- |-- favicon.ico 
-+-- src/
- +-- icons/
-  |-- add.svg
-  |-- arrow-back.svg
-  |-- arrow-drop-down.svg
- |-- App.js 
- |-- App.css
- |-- App.test.js
- |-- BooksAPI.js 
- |-- index.js
- |-- index.css
-|-- .gitignore 
-|-- README.MD
-|-- SEARCH_TERMS.md - The whitelisted collection of search terms.
-```
+## Instructions
 
-## Backend Server
+Follow these steps to run this project from your local server: 
 
-BooksAPI.js methods available:
+1. Clone this repository - `git clone https://github.com/tyhopp/react-bookshelf`
+2. Change into the project repo - `cd react-bookshelf`
+3. Start the project - `npm start` or `yarn start`.
 
-### `getAll()`
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in the app.
+## Functionality
 
-### `update(book, shelf)`
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
+This bookshelf allows you to organize your books by "Currently Reading", "Want To Read", and "Read". Move books from shelf to shelf by selecting the book's dropdown and selecting the desired shelf. 
 
-### `search(query, maxResults)`
-* query: `<String>`
-* maxResults: `<Integer>` Due to the nature of the backend server, search results are capped at 20, even if this is set higher.
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
+You can also search available books by clicking on the plus icon. From there, use the same method to move the book to the desired shelf on your bookshelf.
 
-## Important
+## A Note on Search Terms
+
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend.
+
+## Attributions
+
+Base HTML and CSS styles were provided by the React Nanodegree team from the [starter template](https://github.com/udacity/reactnd-project-myreads-starter). It was also bootstrapped with [create-react-app](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md), where you can find more common tasks to perform.
 

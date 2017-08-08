@@ -15,14 +15,14 @@ class BookSearch extends React.Component {
     query: '',
   }
 
-  updateSearchBar = (query) => {
-    this.setState({ query: query.trim() })
+  updateQuery = query => {
+  	this.setState({ query: query.trim() })
   }
 
 	render () {
 
 		// destructuring props so can be called without 'this.props'
-	    const { books, updateQuery, changeShelf } = this.props
+	    const { books, submitQuery, changeShelf } = this.props
 	    const { query } = this.state
 
 /*
@@ -44,12 +44,12 @@ class BookSearch extends React.Component {
 	   			<div className="search-books">
 		            <div className="search-books-bar">
 		            	<Link to="/" className="close-search">Close</Link>
-		            	<form className="search-books-input-wrapper" onSubmit={updateQuery} >
+		            	<form className="search-books-input-wrapper" onChange={(event) => submitQuery(event.target.value)} >
 		                	<input 
 		                		type="text" 
 		                		placeholder="Search by title or author"
 		                		value={query}
-		                		onChange={(event) => this.updateSearchBar(event.target.value)}
+		                		onChange={(event) => this.updateQuery(event.target.value)}
 		                	/>
 		              	</form>
 		            </div>

@@ -30,7 +30,8 @@ class BooksApp extends React.Component {
     })
   }
 
-  updateQuery = (books, query) => {
+   submitQuery = query => {
+     this.setState({ query: query })
    BooksAPI.search(query, 100).then(books => {
      this.setState({ books })
    })
@@ -54,7 +55,7 @@ class BooksApp extends React.Component {
           <Route exact path="/search" render={({ history }) => (
             <BookSearch books={this.state.books} 
                         changeShelf={this.changeShelf}
-                        updateQuery={this.updateQuery}
+                        submitQuery={this.submitQuery}
                         /> )} />
           
       </div>

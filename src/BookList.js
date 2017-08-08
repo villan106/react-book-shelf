@@ -1,7 +1,9 @@
 import React from 'react'
 import './App.css'
 import { Link } from 'react-router-dom'
-import Book from './Book'
+import CurrentlyReading from './CurrentlyReading'
+import WantToRead from './WantToRead'
+import Read from './Read'
 
 class BookList extends React.Component {
 
@@ -18,45 +20,18 @@ class BookList extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
+
             <div className="list-books-content">
               <div>
-
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-
-                    {/* must bind changeShelf func for it to be passed as a prop to Book.js */}
-                    {books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
-                    </ol>
-                  </div>
-                </div>
-
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      
-                    {books.filter(book => book.shelf === 'wantToRead').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
-                  
-                    </ol>
-                  </div>
-                </div>
-
-
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      
-                    {books.filter(book => book.shelf === 'read').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
-     
-                    </ol>
-                  </div>
-                </div>
+                <CurrentlyReading changeShelf={changeShelf} books={books} />
               </div>
+              <div>
+                <WantToRead changeShelf={changeShelf} books={books} />
+              </div>
+              <div>
+                <Read changeShelf={changeShelf} books={books} />
+              </div>
+
             </div>
 
             <div className="open-search">

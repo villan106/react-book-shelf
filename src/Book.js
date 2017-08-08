@@ -16,7 +16,7 @@ class Book extends React.Component {
 	      <li key={book.id}>
 	         <div className="book">
 	            <div className="book-top">
-	              <div className="book-cover" key={book.imageLinks.thumbnail} style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
+	              <div className="book-cover" key={book.imageLinks.thumbnail} style={{ backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
 	              <div className="book-shelf-changer">
 	                <select onChange={(event) => changeShelf(book, event.target.value)} defaultValue={book.shelf}>
 	                  <option value="none" disabled>Move to...</option>

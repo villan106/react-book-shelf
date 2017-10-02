@@ -18,8 +18,11 @@ class CurrentlyReading extends React.Component {
 	      <div className="bookshelf-books">
 	        <ol className="books-grid">
 
-	        {/* must bind changeShelf func for it to be passed as a prop to Book.js */}
-	        {books.filter(book => book.shelf === 'currentlyReading').map((book) => <Book key={book.id} book={book} changeShelf={changeShelf} />)}
+		        {/* must bind changeShelf func for it to be passed as a prop to Book.js */}
+		        {books.filter(book => book.shelf === 'currentlyReading').map((book) => 
+		        	<Book key={book.id} book={book} changeShelf={changeShelf} />
+		        )}
+		        
 	        </ol>
 	      </div>
 	    </div>

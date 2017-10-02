@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
   state = {
     showSearchPage: false,
     books: [],
+    searchedBooks: [],
   }
 
     // represents books currently in the shelf
@@ -22,6 +23,9 @@ class BooksApp extends React.Component {
 
   // BooksAPI needs book object and shelf string, so need to pass it to changeShelf
   changeShelf = (book, shelf) => {
+
+    // check if search results already exist in booklist
+
     BooksAPI.update(book, shelf).then(response => {
       book.shelf = shelf
       this.setState((state) => ({
@@ -30,15 +34,21 @@ class BooksApp extends React.Component {
     })
   }
 
-   submitQuery = query => {
-     this.setState({ query: query })
-   BooksAPI.search(query, 100).then(books => {
-     this.setState({ books })
-   })
- }
+  submitQuery = (query, searchedBooks) => {
+    this.setState({ query: query })
 
+    // returns from BooksAPI.search() and BooksAPI.getAll() are not consistent
+    // check if any search results already exist in your list of books
+    // if result exists in personal list of books, change it to the appropriate shelf type
 
+    BooksAPI.search(query, 100).then(books => {
+    
+    this.setState({ 
+      searchedBooks: books,
+    })
 
+    })
+  }
 
   render() {
     
@@ -53,7 +63,7 @@ class BooksApp extends React.Component {
                       
 
           <Route exact path="/search" render={({ history }) => (
-            <BookSearch books={this.state.books} 
+            <BookSearch searchedBooks={this.state.searchedBooks}
                         changeShelf={this.changeShelf}
                         submitQuery={this.submitQuery}
                         /> )} />

@@ -12,6 +12,7 @@ class BooksApp extends React.Component {
     showSearchPage: false,
     books: [],
     searchedBooks: [],
+    filteredBooks: [],
   }
 
     // represents books currently in the shelf
@@ -38,16 +39,21 @@ class BooksApp extends React.Component {
     if (query !== '') {
       this.setState({ query: query })
 
+      const { books } = this.state
+
       // returns from BooksAPI.search() and BooksAPI.getAll() are not consistent
       // check if any search results already exist in your list of books
       // if result exists in personal list of books, change it to the appropriate shelf type
-
-      BooksAPI.search(query, 100).then(books => {
       
-      this.setState({ 
-        searchedBooks: books,
-      })
-
+      BooksAPI.search(query, 100).then(searchedBooks => {
+              searchedBooks.forEach(sb => {
+                books.forEach(b => {
+                  if(b.id === sb.id) {
+                    sb.shelf = b.shelf;
+                  }
+                })
+              })
+          this.setState({ searchedBooks: searchedBooks })
       })
     }
   }

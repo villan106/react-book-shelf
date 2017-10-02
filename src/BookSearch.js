@@ -19,7 +19,7 @@ class BookSearch extends React.Component {
 	render () {
 
 		// destructuring props so can be called without 'this.props'
-	    const { books, searchedBooks, submitQuery, changeShelf } = this.props
+	    const { searchedBooks, submitQuery, changeShelf } = this.props
 	    const { query } = this.state
 
 

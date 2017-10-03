@@ -9,7 +9,6 @@ class BooksApp extends React.Component {
 
   // so search doesn't show up at BookList
   state = {
-    showSearchPage: false,
     books: [],
     searchedBooks: [],
     filteredBooks: [],
@@ -53,8 +52,11 @@ class BooksApp extends React.Component {
                   }
                 })
               })
+            
           this.setState({ searchedBooks: searchedBooks })
-      })
+      }).catch(e => { // catch error if query can't be found
+        this.setState({ searchedBooks: []}) 
+      }) 
     }
   }
 

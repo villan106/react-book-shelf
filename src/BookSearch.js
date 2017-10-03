@@ -54,11 +54,9 @@ class BookSearch extends React.Component {
 	          	<div className="bookshelf">
 	                  <div className="bookshelf-books">
 	                    <ol className="books-grid">
-	                    	{console.log(searchedBooks)}
 		                	{searchedBooks.map((book) => 
 		                		<Book key={book.id} book={book} changeShelf={changeShelf} />
 		                	)}
-
 	                    </ol>
 	                  </div>
 	                </div>

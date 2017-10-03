@@ -38,12 +38,13 @@ class BooksApp extends React.Component {
     if (query !== '') {
       this.setState({ query: query })
 
-      const { books } = this.state
-
       // returns from BooksAPI.search() and BooksAPI.getAll() are not consistent
       // check if any search results already exist in your list of books
       // if result exists in personal list of books, change it to the appropriate shelf type
       
+      // Prior method, using forEach: 
+      // works, but default value of searched books is always 'Currently Reading'
+      /*
       BooksAPI.search(query, 100).then(searchedBooks => {
               searchedBooks.forEach(sb => {
                 books.forEach(b => {
@@ -57,6 +58,35 @@ class BooksApp extends React.Component {
       }).catch(e => { // catch error if query can't be found
         this.setState({ searchedBooks: []}) 
       }) 
+      */
+
+      const { books } = this.state
+
+      // New method, using .find()
+      // succesfully catches infrequent thumbnail 
+      // and changes default state of searched to 'None'
+      BooksAPI.search(query, 100).then(searchedBooks => {
+        if (searchedBooks.error) {
+          // On empty query, error sets the search result to empty
+          this.setState({searchedBooks: []});
+        } else {
+          // on successful search, maps the books on shelves to the search results
+          searchedBooks.map((filteredBooks) => {
+            // check if searched books match books on list
+            let bookOnShelf = books.find((b) => b.id === filteredBooks.id);
+            // if book is already on shelf
+            if (bookOnShelf) {
+               // update corresponding searched book's shelf
+               filteredBooks.shelf = bookOnShelf.shelf;
+            } else {
+               // if book isn't already on shelf, set shelf to 'none'
+               filteredBooks.shelf = 'none';
+            }
+         })
+         this.setState({ searchedBooks: searchedBooks })
+       }
+      }).catch(e => {this.setState({ searchedBooks: [] })
+      })
     }
   }
 

@@ -3,7 +3,14 @@ import './App.css'
 
 class Book extends React.Component {
 
-
+	// make sure thumbnail exists before using it
+	checkThumbnailExists(book) {
+		if (book.imageLinks.thumbnail) {
+			return (
+				<div className="book-cover" key={book.imageLinks.thumbnail} style={{ backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
+			)
+		}
+	}
  
 	render(){
 
@@ -16,7 +23,7 @@ class Book extends React.Component {
 	      <li key={book.id}>
 	         <div className="book">
 	            <div className="book-top">
-	              <div className="book-cover" key={book.imageLinks.thumbnail} style={{ backgroundImage: `url(${book.imageLinks.thumbnail})`}} alt="book cover"></div>
+	              { this.checkThumbnailExists(book) }
 	              <div className="book-shelf-changer">
 	                <select onChange={(event) => changeShelf(book, event.target.value)} defaultValue={book.shelf}>
 	                  <option value="none" disabled>Move to...</option>
@@ -28,7 +35,7 @@ class Book extends React.Component {
 	              </div>
 	            </div>
 	            <div className="book-title" key={book.title}>{book.title}</div>
-	            <div className="book-authors" key={book.authors}>{book.authors}</div>
+	            <div className="book-authors" key={book.authors}>{book.authors && book.authors.join(', ')}</div>
 	          </div>
 	        
 	        </li>

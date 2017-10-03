@@ -71,6 +71,7 @@ class BooksApp extends React.Component {
           this.setState({searchedBooks: []});
         } else {
           // on successful search, maps the books on shelves to the search results
+          // eslint-disable-next-line
           searchedBooks.map((filteredBooks) => {
             // check if searched books match books on list
             let bookOnShelf = books.find((b) => b.id === filteredBooks.id);

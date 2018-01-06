@@ -2,6 +2,9 @@
 
 This is a bookshelf project built in React for the [Udacity React Nanodegree](https://www.udacity.com/course/react-nanodegree--nd019).
 
+## Demo
+![Bookshelf project in action](https://github.com/tyhopp/react-bookshelf/bookshelf-demo.gif)
+
 ## Instructions
 
 Follow these steps to run this project from your local server: 

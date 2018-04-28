@@ -28,3 +28,9 @@ The backend API uses a fixed set of cached search results and is limited to a pa
 
 Base HTML and CSS styles were provided by the React Nanodegree team from the [starter template](https://github.com/udacity/reactnd-project-myreads-starter). It was also bootstrapped with [create-react-app](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md), where you can find more common tasks to perform.
 
+## License
+
+MIT License
+
+Copyright (c) 2018 Ty Hopp
+
